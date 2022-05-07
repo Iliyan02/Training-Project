@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragment :: head">
+</head>
+<body>
+<header th:replace="fragments/fragment :: header"></header>
+
+<main>
+    <div style="margin-top: 30px" class="d-flex justify-content-center">
+        <form
+            th:action="@{/songs/add}"
+            method="POST"
+            th:object="${addSongBindingModel}"
+            class="text-light"
+        >
+            <div class="form-row m-5">
+                <div class="col">
+                    <small th:if="${exists}"  id="nameUniqueError"
+                           class="text-light form-text bg-danger rounded">This song is already added</small>
+
+                    <label for="name">Song name</label>
+                    <input
+                            th:field="*{name}"
+                            th:errorclass="is-invalid"
+                            required
+                            id="name"
+                            name="name"
+                            type="text" class="form-control" placeholder="Song name">
+                    <small id="nameError" class="invalid-feedback form-text bg-danger rounded">Name must be between 3 and 50
+                        characters</small>
+
+                    <label for="imageUrl">Image URL</label>
+                    <input
+                            th:field="*{imageUrl}"
+                            th:errorclass="is-invalid"
+                            required
+                            id="imageUrl"
+                            name="imageUrl"
+                            type="text" class="form-control" placeholder="Image Url">
+                    <small id="imageUrlError" class="invalid-feedback form-text bg-danger rounded">Image Url must not be empty!</small>
+
+                    <label for="videoUrl">Song name</label>
+                    <input
+                            th:field="*{videoUrl}"
+                            th:errorclass="is-invalid"
+                            required
+                            id="videoUrl"
+                            name="videoUrl"
+                            type="text" class="form-control" placeholder="Video Url">
+                    <small id="videoUrlError" class="invalid-feedback form-text bg-danger rounded">Video Url must not be empty!</small>
+
+                    <label for="releaseDate">Release date</label>
+                    <input
+                            th:field="*{releaseDate}"
+                            th:errorclass="is-invalid"
+                            required id="releaseDate"
+                            name="releaseDate" type="date"
+                            class="form-control"
+                            placeholder="Release date">
+                    <small id="releaseDateError" class="invalid-feedback form-text bg-danger rounded">Release date cannot be in the future</small>
+
+                    <label for="genre">Genre</label>
+                    <select th:field="*{genre}" th:errorclass="is-invalid" id="genre" name="genre" class="form-select">
+                        <option value="" selected>Select genre</option>
+                        <option
+                                th:each="g : ${T(example.model.entity.Genre).values()}"
+                                th:value="${g}"
+                                th:text="${g}">Select genre</option>
+                    </select>
+
+                    <small id="genreError" class="invalid-feedback form-text bg-danger rounded">You must select genre</small>
+
+
+                    <label>Singer</label>
+                    <label for="singers"></label>
+                    <select th:field="*{singerEntity}" th:errorclass="is-invalid" id="singers" class="form-select">
+                        <option th:each="d : ${singers}" th:value="${d}" th:text="${d}">First Director</option>
+                    </select>
+                    <small id="singerError" class="invalid-feedback form-text bg-danger rounded">You must select a singer</small>
+
+                </div>
+
+                <div class="d-flex justify-content-center mt-4">
+                    <button class="btn btn-primary btn-block w-50" type="submit">Add New Song</button>
+                </div>
+            </div>
+
+
+        </form>
+
+    </div>
+</main>
+</body>
+
+<script th:replace="fragments/fragment :: script"></script>
+
+</html>
